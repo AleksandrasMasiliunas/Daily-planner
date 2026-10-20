@@ -1,0 +1,699 @@
+/* Hourly Planner styles */
+
+/* colours and fonts are set here so they are easy to change */
+:root {
+  color-scheme: light dark;
+  --bg: #f1f4f7;
+  --surface: #ffffff;
+  --ink: #14202b;
+  --muted: #5b6977;
+  --line: #d8dfe6;
+  --accent: #1d5fd1;
+  --accent-text: #ffffff;
+  --accent-soft: #e2ecfb;
+  --done: #8b97a3;
+  --danger: #b3261e;
+  --late: #9a4b00;
+  --late-soft: #fdebd3;
+  --bar: #bccadb;
+  --font-heading: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, Menlo, monospace;
+}
+
+/* dark mode follows the device setting */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f151b;
+    --surface: #171f27;
+    --ink: #e8eef4;
+    --muted: #93a1af;
+    --line: #28333e;
+    --accent: #6aa0f5;
+    --accent-text: #0b1420;
+    --accent-soft: #1b2b44;
+    --done: #66737f;
+    --danger: #f2a39d;
+    --late: #f2b872;
+    --late-soft: #3a2a14;
+    --bar: #33414f;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+select,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0 16px 56px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+
+/* ---------- header ---------- */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding: 18px 0 12px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
+.head-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px 12px;
+}
+
+.date-line {
+  margin: 0 0 2px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 6vw, 2.1rem);
+  line-height: 1.1;
+}
+
+.nav {
+  display: flex;
+  gap: 6px;
+}
+
+.nav button {
+  height: 34px;
+  min-width: 34px;
+  padding: 0 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.nav button:hover {
+  border-color: var(--muted);
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.bar span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.25s ease;
+}
+
+.count {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.link-button {
+  padding: 2px 4px;
+  background: none;
+  border: 0;
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.link-button:hover {
+  color: var(--ink);
+}
+
+
+/* ---------- focus timer ---------- */
+.timer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pill.late {
+  background: var(--late-soft);
+  color: var(--late);
+}
+
+.pill.break {
+  background: var(--done);
+  color: var(--bg);
+}
+
+.clock {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.timer-text {
+  flex: 1 1 8rem;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 14px;
+  color: var(--muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.timer-buttons {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.timer-buttons button {
+  height: 32px;
+  padding: 0 12px;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.timer-buttons button:hover {
+  border-color: var(--muted);
+}
+
+
+/* ---------- notes and cards ---------- */
+.note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  margin: 14px 0 0;
+  padding: 10px 14px;
+  background: var(--accent-soft);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.note .btns {
+  display: flex;
+  gap: 6px;
+}
+
+.note button {
+  padding: 2px 6px;
+  background: none;
+  border: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.card {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.card h2 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.hint {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.hint.warn {
+  color: var(--late);
+}
+
+
+/* ---------- top priorities ---------- */
+.pri {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pri li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+  padding: 5px 0;
+}
+
+.pri .text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.pri li.done .text {
+  color: var(--done);
+  text-decoration: line-through;
+}
+
+.pri .when {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+
+/* ---------- hour rows ---------- */
+.hours {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hour {
+  display: grid;
+  grid-template-columns: 4.25rem minmax(0, 1fr);
+  gap: 4px 12px;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--line);
+  border-radius: 10px;
+  scroll-margin-top: 190px;
+}
+
+.hour.now {
+  background: var(--accent-soft);
+  border-bottom-color: transparent;
+}
+
+.label {
+  padding-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.hour.past .label {
+  color: var(--done);
+}
+
+.hour.now .label {
+  color: var(--accent);
+}
+
+.label .pill {
+  display: block;
+  width: max-content;
+  margin-top: 4px;
+}
+
+.slot {
+  min-width: 0;
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 10px;
+  min-height: 40px;
+  padding: 4px 0;
+}
+
+/* custom checkbox */
+input[type="checkbox"] {
+  appearance: none;
+  display: grid;
+  place-content: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  background: var(--surface);
+  border: 2px solid var(--muted);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+input[type="checkbox"]:checked::after {
+  content: "";
+  width: 6px;
+  height: 11px;
+  border: solid var(--accent-text);
+  border-width: 0 2px 2px 0;
+  transform: translateY(-1px) rotate(45deg);
+}
+
+.task-time {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.task.done .task-time {
+  color: var(--done);
+}
+
+.task .text {
+  flex: 1 1 7rem;
+  min-width: 0;
+  padding: 4px 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  overflow-wrap: anywhere;
+  cursor: text;
+}
+
+.task.done .text {
+  color: var(--done);
+  text-decoration: line-through;
+}
+
+.editbox {
+  display: flex;
+  flex: 1 1 12rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.task .edit {
+  flex: 1 1 7rem;
+  min-width: 0;
+  padding: 4px 8px;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+}
+
+.acts {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.act {
+  display: grid;
+  place-items: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.act:hover {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.act.txt {
+  padding: 0 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.act.remove:hover {
+  color: var(--danger);
+}
+
+.act[aria-pressed="true"] {
+  color: var(--accent);
+}
+
+
+/* ---------- add a task ---------- */
+.add {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.new-task {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px dashed transparent;
+  border-radius: 0;
+  font-size: 15px;
+}
+
+.new-task::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.hour:hover .new-task,
+.new-task:focus {
+  border-bottom-color: var(--line);
+}
+
+.new-task:focus {
+  outline: none;
+  border-bottom: 1px solid var(--accent);
+}
+
+.time-input {
+  height: 34px;
+  padding: 0 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+/* in the add form the time box only shows up when you use that row */
+.add .time-input {
+  flex: none;
+  width: 6.4rem;
+  background: transparent;
+  color: var(--muted);
+  opacity: 0;
+}
+
+.add:focus-within .time-input,
+.hour:hover .add .time-input {
+  opacity: 1;
+}
+
+
+/* ---------- last 7 days ---------- */
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  align-items: end;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.track {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 36px;
+  height: 72px;
+}
+
+.fill {
+  width: 100%;
+  min-height: 3px;
+  background: var(--bar);
+  border-radius: 4px 4px 0 0;
+}
+
+.col.today .fill {
+  background: var(--accent);
+}
+
+.day-name,
+.day-count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.day-name {
+  text-transform: uppercase;
+}
+
+.col.today .day-name {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stat-value {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.stat-note {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+
+/* ---------- settings ---------- */
+.settings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+
+.settings label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.settings select {
+  height: 36px;
+  padding: 0 10px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+
+/* keyboard focus outline */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar span {
+    transition: none;
+  }
+}

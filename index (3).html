@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hourly Planner</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- top of the page: day, progress and the focus timer -->
+    <header>
+      <div class="head-top">
+        <div>
+          <p class="date-line" id="dateLine"></p>
+          <h1 id="title">Today, by the hour</h1>
+        </div>
+        <div class="nav">
+          <button type="button" id="prevDay" aria-label="Previous day">&#8249;</button>
+          <button type="button" id="goToday">Today</button>
+          <button type="button" id="nextDay" aria-label="Next day">&#8250;</button>
+        </div>
+      </div>
+
+      <div class="progress">
+        <div class="bar" aria-hidden="true"><span id="barFill"></span></div>
+        <span class="count" id="count"></span>
+        <button class="link-button" id="clearDone" type="button">Clear done</button>
+      </div>
+
+      <div class="timer" id="timer" hidden>
+        <span class="pill" id="timerMode">Focus</span>
+        <span class="clock" id="timerClock">25:00</span>
+        <span class="timer-text" id="timerText"></span>
+        <span class="timer-buttons">
+          <button type="button" id="timerPause">Pause</button>
+          <button type="button" id="timerStop">Stop</button>
+        </span>
+      </div>
+    </header>
+
+    <!-- messages (filled in by script.js) -->
+    <div class="note" id="carry" hidden></div>
+    <div class="note" id="note" hidden>
+      <span>These are example tasks. Remove any you don't need.</span>
+      <span class="btns"><button type="button" id="dismissNote">Got it</button></span>
+    </div>
+
+    <!-- top 3 priorities -->
+    <section class="card" aria-labelledby="priHead">
+      <h2 id="priHead"><span>Top priorities</span><span id="priCount"></span></h2>
+      <ul class="pri" id="pri"></ul>
+      <p class="hint" id="priHint" aria-live="polite"></p>
+    </section>
+
+    <!-- one row per hour -->
+    <ol class="hours" id="hours"></ol>
+
+    <!-- last 7 days -->
+    <section class="card" aria-labelledby="weekHead">
+      <h2 id="weekHead"><span>Last 7 days</span><span>Share of tasks done</span></h2>
+      <div class="week" id="week"></div>
+      <div class="stats" id="stats"></div>
+    </section>
+
+    <!-- settings -->
+    <section class="card" aria-labelledby="setHead">
+      <h2 id="setHead"><span>Settings</span></h2>
+      <div class="settings">
+        <label for="setFirst">Day starts
+          <select id="setFirst"></select>
+        </label>
+        <label for="setLast">Last hour shown
+          <select id="setLast"></select>
+        </label>
+        <label for="setFocus">Focus session
+          <select id="setFocus"></select>
+        </label>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
